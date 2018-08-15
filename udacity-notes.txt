@@ -1,0 +1,207 @@
+# Git / Remote Repository
+- Commands
+    - `git remote`
+        - `git remote add origin <repo-on-github>`
+            - 'origin' is just a convention - could call it anything
+            - adds a remote repository
+        - `git remote -v` shows full location of remote repository
+    - `git push`
+        - send local commits to a remote repository
+        - `git push <remote-shortname> <branch>`
+        - New marker on git log (e.g. `origin/master`) is the tracking branch. Says that the 
+        remote 'origin' has a 'master' branch that points to the specified commit
+    - `git pull`
+        - Pull remote repository (aka sync remote commits to local repository)
+        - `git pull <remote-shortname> <branch>
+    - `git fetch`
+        - retrieves commits from a remote repository but it does not automatically 
+        merge them. The "origin/master" pointer moves but the "master" pointer does not.
+
+
+# Version Control / Git
+- Commands
+    - `git init`
+        - Creates a new empty respository in the current directory
+    - `git clone`
+        - Clones an existing repository
+        - `git clone <path-to-repository-to-clone>`
+    - `git status
+        - Use this a lot!
+    - `git log`
+        - Displays information about the existing commits
+        - `git log --oneline` -shows compressed view
+        - `git log --stat` -aka statistics. Shows detailed view.
+        - `git log --patch` - aka --p shows the actual changes to a file.
+        - `git log --oneline --graph --all` shows all branches visually
+    - `git show`
+        - Displays information about the given commit (you supply which commit)
+        - Can use many of the same commands as git log.
+    - `git add`
+        - add files to staging index.
+        - `git add <filename1> <filename2>` to add one file (or multiple named files) 
+        - `git add .` to add everything in current directory (and all subdirectories)
+    - `git commit` 
+        - commits staged files. Opens up text editor to write commit message first.
+        - `git commit -m "Commit message here"` bypasses the open the editor stage
+        - Finish the sentence "This commit will ..."
+        - `git commit --amend`
+            - if working directory is clean, will let you update commit message
+            - if there are staged files, will let you add them to previous commit
+    - `git diff`
+        - See changes that have been made but haven't been committed yet.
+    - `.gitignore`
+        - Not a command but a file in the same directory level as the .git folder
+        - Files listed in .gitignore are ignored by git.
+        - Can also use "globbing" for wildcard matching
+    - `git tag`
+        - Adds a tag to particular commit
+        - `git tag -a "tag name"` adds a tag. The -a part means it is annotated
+        the person who made the tag, the date, and a message for the tag.
+        - `git tag` by itself will list all the tags in the respository.
+        - `git tag -d "tag name" the -d will delete the specified tag.
+        - `git tag -a "tag name" <SHA>` will let you add a tag to any specified commit.
+    - `git branch`
+        - list all branch names and specified the active branch
+        - `git branch "branch_name"` creates new branch
+        - `git branch "branch_name SHA" creates new branch from specified commit
+        - `git branch -d "named_branch"` deletes the named branch
+            - Note: can't delete a branch you are currently in
+    - `git checkout`
+        - `git checkout "branch_name" this will move to the named branch AND
+            - Remove all files and directories from the Working Directory that Git is tracking
+            - Go into the repository and pull out all of the files and directories of the 
+            branch
+        - Changes where the HEAD pointer is referencing
+        - `git checkout -b "new_branch_name"` makes a new branch and switch to it
+    - `git merge` 
+        - merges branches. Make sure you are in the branch you want to continue
+        - `git merge <name-of-branch-to-merge-in> does the merge. Git to will:
+            - look at the branches that it's going to merge
+            - look back along the branch's history to find a single shared commit
+            - merge the code
+            - make a commit to record the merge
+        - `git reset --hard HEAD^` undo merge (include caret character!) 
+        - merge conflicts - make sure you clean up teh merge conflict characters 
+        before committing!
+            - search file for `<<<` to locate all of the conflicts 
+    - `git revert` 
+        - takes changes that were made in a commit and undoes them
+        - `git revert <SHA-of-commit-to-revert>` - undoes specified commit, creates new 
+        commit to record the change
+    - `git reset` 
+        - Erases commits. ERASES! Reverting creates a new commit that undoes previous commit.
+        Information is stil there with the `git revert` command
+            - `git reflog` can recover `git reset` deletions within 30 days
+            - flags
+                `--mixed` default. Removed changes written back to files in staging directory.
+                `--soft` moves removed changes to the staging index.
+                `--hard` moves removed changes to trash.
+    - Relative commit references
+        - `^` indicates the parent commit
+        - `~` indicates teh first parent commit
+        - can stack. Aka `^^` is the grandparent of the commit
+        - merge commits have two parents. First parent is the branch you were on when 
+        `git merge` was run. Second parent is branch that was merged in.
+            - with a merge commit `^` is used to indicate the first parent and 
+            `^2` is the second parent.
+            - `HEAD^^^2` is the grandparent's (HEAD^^) second parent(^2)
+
+
+
+
+
+
+- Three main areas:
+    - Working  Directory
+    - Staging Index
+    - Repository
+- Setting up Git: 
+    # sets up Git with your name
+    git config --global user.name "<Your-Full-Name>"
+
+    # sets up Git with your email
+    git config --global user.email "<your-email-address>"
+
+    # makes sure that Git output is colored
+    git config --global color.ui auto
+
+    # displays the original state in a conflict
+    git config --global merge.conflictstyle diff3
+
+    git config --list
+
+# Command line
+- Useful commands
+    - ls 
+        - can use * as awildcard for searching
+    - pwd
+    - curl
+        - Use `-L` to follow redirects
+        - Use `-o` plus filename to output results to a file
+    - grep
+    
+- Single quotes mean treat any special characters as just a normal character (e.g. !, *, &, etc)
+
+
+
+# Javascript syntax
+- Variables
+    - `let` if value will change
+    - `const` if value will be static
+    - If unsure, use `const` and change to `let` later if need be.
+- Template literals
+    - Denoted with backticks `` and contain placeholders ${expression}.
+        - Kind of like powershell...
+    - Work well with multi-line strings since implicit newlines are part of the string.
+    - Within expressions, can also perform operations, call functions, and use loops!
+- Destructuring
+    - Destructuring borrows inspiration from languages like Perl and Python by allowing you to specify the elements you want to extract from an array or object on the left side of an assignment. 
+    
+
+# Project 1 Notes - Portfolio
+- Image resources
+    - [yellow pencils](https://unsplash.com/photos/1_CMoFsPfso)
+        - Use art direction
+- Use yellow images (search "yellow" on unsplash.com) for app backgrounds
+    - [pixel "app"](https://unsplash.com/photos/WEVSu0CB2M4)
+    - [neighborhood "app"](https://unsplash.com/photos/np9Tr3SDRw4)
+    - [memory "app"](https://unsplash.com/photos/bmS3th_-BIg)
+- Fonts
+    - [Raleway](https://fonts.google.com/specimen/Raleway)
+        - Has a really cool "W"
+    - [Lato](https://fonts.google.com/specimen/Lato)
+        - Pretty classic
+
+# Writing READMEs
+- Good questions to ask yourself:
+    - What steps need to be taken?
+    - What should the user already have installed or configured?
+    - What might they have a hard time understanding right away?
+- Chooseing a license
+    - https://choosealicense.com/
+- Online Markdown editor with a live view
+    - https://dillinger.io/  
+
+#Contained Table
+- Wrap the table in a div (ex. `<div class="contained_table">table goes here</div>)
+` 
+div.contained_table {
+    width: 100%;
+    overflow-x: auto;
+}
+`
+
+# Fonts
+- Ideal Measure (the length of a line of text)
+    - 45 - 90 characters per line (cpl)
+    -  *Try 65 cpl*
+    -  Use measure as a factor for choosing breakpoints
+
+- Size
+    - Minimum font size: 16px
+    - Minimum line-height: 1.2em
+    - Consider increasing both for text heavy sites
+
+
+# Minor breakpoints
+- Fine tune font size, spacing, etc. at minor breakpoints even if the layout isn't changing.
