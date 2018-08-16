@@ -3,6 +3,24 @@
     - There is no `git fork` command. Part of the hosting environment.
     - Makes an identical copy of their repository that belongs to you.
     - Once forked, can then `git clone`
+- Commands
+    - `git shortlog`
+        - Shows how many alphabetical list of names and their commit messages.
+        - `git shortlog -s -n`
+            - Shows the number of commits by each developer.
+            - `-s` show just the number of commits
+            - `-n` sort results numerically
+    - `git log --author="author name"`
+        - filter commits to the specified author
+- What to work on
+    - Check the CONTRIBUTING.md file of their project
+    - Check the Issues page of their project
+- Develop all of your work on a single topic branch
+    - Give the topic branch a clear name
+- General best practices for writing commits:
+    - makre frequest, smaller commits
+    - use clear and descriptive commit messages
+    - update the README file if necessary
 
 # Git / Remote Repository
 - Commands
@@ -39,6 +57,7 @@
         - `git log --stat` -aka statistics. Shows detailed view.
         - `git log --patch` - aka --p shows the actual changes to a file.
         - `git log --oneline --graph --all` shows all branches visually
+        - `git log --grep 'search string" searches commits for string
     - `git show`
         - Displays information about the given commit (you supply which commit)
         - Can use many of the same commands as git log.
