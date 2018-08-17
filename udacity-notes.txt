@@ -1,3 +1,40 @@
+# Staying in Sync With a Remote Repository
+- How to create a pull request
+    - Fork the soruce respository
+    - Clone fork on local machine
+    - Make some commits (ideally on a topic branch)
+        - See section "Working on Another Developer's Repository"
+    - Push the commits back to your fork
+    - Create a new pull request and choose the branch that has your new commits
+- Stay in sync with the source project
+    - "Starring" a respository - like adding it to a favorites's list but no notifications
+    - "Watching" a respository - get notified of changes
+    - To include upstream changes
+        - `git remote add upstream <url_of_original>
+            - adds another remote site
+            - "upstream" is the conventional name
+        - `git fetch <remote_site> <branch>`
+        - Merge the upstream's branch into local branch (verify you are in the correct branch)
+        - Push the newly update branch to your origin repo
+- Manage an Active PR
+    - If the project's maintainer is requesting changes to the pull request:
+        - Make any necessary commits on the same branch on your local repository
+        - Push the branch to _your_ fork fo the source repository
+    - `git rebase`
+        - will squash commits (consolidate commits on a new base)
+        - `git rebase -i HEAD~3` and replace "3" with the number of commits you want to 
+        squash.
+            - Will then open editor where you need to say what you want to do to each commit.
+            - Oldest commit will be at top.
+            - Need to keep (aka pick) at least one commit but can also change the commit 
+            message (reword) to reflect the squash
+            - Will likely need to do a git push force since GitHub will be unhappy that you
+            are trying to push a branch with fewer commits.
+        - Be careful with `git rebase`! Rebasing will create a new commit with a new SHA which
+        has the potential to severely mess up anyone else who might be working with commits 
+        you've already pushed. They may not be able to get their repo back in sync and might 
+        have to start over.
+
 # Working on Another Developer's Repository
 - Forking a repository
     - There is no `git fork` command. Part of the hosting environment.
@@ -29,13 +66,14 @@
             - 'origin' is just a convention - could call it anything
             - adds a remote repository
         - `git remote -v` shows full location of remote repository
+        - `git remote rename <remote_site_old_name> <remote_site_new_name>
     - `git push`
         - send local commits to a remote repository
         - `git push <remote-shortname> <branch>`
         - New marker on git log (e.g. `origin/master`) is the tracking branch. Says that the 
         remote 'origin' has a 'master' branch that points to the specified commit
     - `git pull`
-        - Pull remote repository (aka sync remote commits to local repository)
+        - Pull remote repository (aka fetch remote commits and merge them into local repo)
         - `git pull <remote-shortname> <branch>
     - `git fetch`
         - retrieves commits from a remote repository but it does not automatically 
@@ -130,6 +168,7 @@
             - with a merge commit `^` is used to indicate the first parent and 
             `^2` is the second parent.
             - `HEAD^^^2` is the grandparent's (HEAD^^) second parent(^2)
+            - `HEAD~3` - the "~3" means 3 commits before the HEAD pointer.
 
 
 
