@@ -1,83 +1,105 @@
-# Staying in Sync With a Remote Repository
-- How to create a pull request
-    - Fork the soruce respository
-    - Clone fork on local machine
-    - Make some commits (ideally on a topic branch)
-        - See section "Working on Another Developer's Repository"
-    - Push the commits back to your fork
-    - Create a new pull request and choose the branch that has your new commits
-- Stay in sync with the source project
-    - "Starring" a respository - like adding it to a favorites's list but no notifications
-    - "Watching" a respository - get notified of changes
-    - To include upstream changes
-        - `git remote add upstream <url_of_original>
-            - adds another remote site
-            - "upstream" is the conventional name
-        - `git fetch <remote_site> <branch>`
-        - Merge the upstream's branch into local branch (verify you are in the correct branch)
-        - Push the newly update branch to your origin repo
-- Manage an Active PR
-    - If the project's maintainer is requesting changes to the pull request:
-        - Make any necessary commits on the same branch on your local repository
-        - Push the branch to _your_ fork fo the source repository
-    - `git rebase`
-        - will squash commits (consolidate commits on a new base)
-        - `git rebase -i HEAD~3` and replace "3" with the number of commits you want to 
-        squash.
-            - Will then open editor where you need to say what you want to do to each commit.
-            - Oldest commit will be at top.
-            - Need to keep (aka pick) at least one commit but can also change the commit 
-            message (reword) to reflect the squash
-            - Will likely need to do a git push force since GitHub will be unhappy that you
-            are trying to push a branch with fewer commits.
-        - Be careful with `git rebase`! Rebasing will create a new commit with a new SHA which
-        has the potential to severely mess up anyone else who might be working with commits 
-        you've already pushed. They may not be able to get their repo back in sync and might 
-        have to start over.
 
-# Working on Another Developer's Repository
-- Forking a repository
-    - There is no `git fork` command. Part of the hosting environment.
-    - Makes an identical copy of their repository that belongs to you.
-    - Once forked, can then `git clone`
-- Commands
-    - `git shortlog`
-        - Shows how many alphabetical list of names and their commit messages.
-        - `git shortlog -s -n`
-            - Shows the number of commits by each developer.
-            - `-s` show just the number of commits
-            - `-n` sort results numerically
-    - `git log --author="author name"`
-        - filter commits to the specified author
-- What to work on
-    - Check the CONTRIBUTING.md file of their project
-    - Check the Issues page of their project
-- Develop all of your work on a single topic branch
-    - Give the topic branch a clear name
-- General best practices for writing commits:
-    - makre frequest, smaller commits
-    - use clear and descriptive commit messages
-    - update the README file if necessary
 
-# Git / Remote Repository
-- Commands
-    - `git remote`
-        - `git remote add origin <repo-on-github>`
-            - 'origin' is just a convention - could call it anything
-            - adds a remote repository
-        - `git remote -v` shows full location of remote repository
-        - `git remote rename <remote_site_old_name> <remote_site_new_name>
-    - `git push`
-        - send local commits to a remote repository
-        - `git push <remote-shortname> <branch>`
-        - New marker on git log (e.g. `origin/master`) is the tracking branch. Says that the 
-        remote 'origin' has a 'master' branch that points to the specified commit
-    - `git pull`
-        - Pull remote repository (aka fetch remote commits and merge them into local repo)
-        - `git pull <remote-shortname> <branch>
-    - `git fetch`
-        - retrieves commits from a remote repository but it does not automatically 
-        merge them. The "origin/master" pointer moves but the "master" pointer does not.
+
+
+
+# Minor breakpoints
+- Fine tune font size, spacing, etc. at minor breakpoints even if the layout isn't changing.
+
+
+# Fonts
+- Ideal Measure (the length of a line of text)
+    - 45 - 90 characters per line (cpl)
+    -  *Try 65 cpl*
+    -  Use measure as a factor for choosing breakpoints
+
+- Size
+    - Minimum font size: 16px
+    - Minimum line-height: 1.2em
+    - Consider increasing both for text heavy sites
+
+
+# Writing READMEs
+- Good questions to ask yourself:
+    - What steps need to be taken?
+    - What should the user already have installed or configured?
+    - What might they have a hard time understanding right away?
+- Chooseing a license
+    - https://choosealicense.com/
+- Online Markdown editor with a live view
+    - https://dillinger.io/  
+
+#Contained Table
+- Wrap the table in a div (ex. `<div class="contained_table">table goes here</div>)
+` 
+div.contained_table {
+    width: 100%;
+    overflow-x: auto;
+}
+`
+
+# Project 1 Notes - Portfolio
+- Image resources
+    - [yellow pencils](https://unsplash.com/photos/1_CMoFsPfso)
+        - Use art direction
+- Use yellow images (search "yellow" on unsplash.com) for app backgrounds
+    - [pixel "app"](https://unsplash.com/photos/WEVSu0CB2M4)
+    - [neighborhood "app"](https://unsplash.com/photos/np9Tr3SDRw4)
+    - [memory "app"](https://unsplash.com/photos/bmS3th_-BIg)
+- Fonts
+    - [Raleway](https://fonts.google.com/specimen/Raleway)
+        - Has a really cool "W"
+    - [Lato](https://fonts.google.com/specimen/Lato)
+        - Pretty classic
+
+
+# Javascript syntax
+- Variables
+    - `let` if value will change
+    - `const` if value will be static
+    - If unsure, use `const` and change to `let` later if need be.
+- Template literals
+    - Denoted with backticks `` and contain placeholders ${expression}.
+        - Kind of like powershell...
+    - Work well with multi-line strings since implicit newlines are part of the string.
+    - Within expressions, can also perform operations, call functions, and use loops!
+- Destructuring
+    - Destructuring borrows inspiration from languages like Perl and Python by allowing 
+    you to specify the elements you want to extract from an array or object on the left 
+    side of an assignment. 
+
+
+# Command line
+- Useful commands
+    - ls 
+        - can use * as awildcard for searching
+    - pwd
+    - curl
+        - Use `-L` to follow redirects
+        - Use `-o` plus filename to output results to a file
+    - grep
+- Single quotes mean treat any special characters as just a normal character (e.g. !, *, &, etc)    
+
+
+# Git
+- Three main areas:
+    - Working  Directory
+    - Staging Index
+    - Repository
+- Setting up Git: 
+    # sets up Git with your name
+    git config --global user.name "<Your-Full-Name>"
+
+    # sets up Git with your email
+    git config --global user.email "<your-email-address>"
+
+    # makes sure that Git output is colored
+    git config --global color.ui auto
+
+    # displays the original state in a conflict
+    git config --global merge.conflictstyle diff3
+
+    git config --list
 
 
 # Version Control / Git
@@ -171,103 +193,85 @@
             - `HEAD~3` - the "~3" means 3 commits before the HEAD pointer.
 
 
+# Git / Remote Repository
+- Commands
+    - `git remote`
+        - `git remote add origin <repo-on-github>`
+            - 'origin' is just a convention - could call it anything
+            - adds a remote repository
+        - `git remote -v` shows full location of remote repository
+        - `git remote rename <remote_site_old_name> <remote_site_new_name>
+    - `git push`
+        - send local commits to a remote repository
+        - `git push <remote-shortname> <branch>`
+        - New marker on git log (e.g. `origin/master`) is the tracking branch. Says that the 
+        remote 'origin' has a 'master' branch that points to the specified commit
+    - `git pull`
+        - Pull remote repository (aka fetch remote commits and merge them into local repo)
+        - `git pull <remote-shortname> <branch>
+    - `git fetch`
+        - retrieves commits from a remote repository but it does not automatically 
+        merge them. The "origin/master" pointer moves but the "master" pointer does not.
 
 
+# Working on Another Developer's Repository
+- Forking a repository
+    - There is no `git fork` command. Part of the hosting environment.
+    - Makes an identical copy of their repository that belongs to you.
+    - Once forked, can then `git clone`
+- Commands
+    - `git shortlog`
+        - Shows how many alphabetical list of names and their commit messages.
+        - `git shortlog -s -n`
+            - Shows the number of commits by each developer.
+            - `-s` show just the number of commits
+            - `-n` sort results numerically
+    - `git log --author="author name"`
+        - filter commits to the specified author
+- What to work on
+    - Check the CONTRIBUTING.md file of their project
+    - Check the Issues page of their project
+- Develop all of your work on a single topic branch
+    - Give the topic branch a clear name
+- General best practices for writing commits:
+    - makre frequest, smaller commits
+    - use clear and descriptive commit messages
+    - update the README file if necessary
 
 
-- Three main areas:
-    - Working  Directory
-    - Staging Index
-    - Repository
-- Setting up Git: 
-    # sets up Git with your name
-    git config --global user.name "<Your-Full-Name>"
-
-    # sets up Git with your email
-    git config --global user.email "<your-email-address>"
-
-    # makes sure that Git output is colored
-    git config --global color.ui auto
-
-    # displays the original state in a conflict
-    git config --global merge.conflictstyle diff3
-
-    git config --list
-
-# Command line
-- Useful commands
-    - ls 
-        - can use * as awildcard for searching
-    - pwd
-    - curl
-        - Use `-L` to follow redirects
-        - Use `-o` plus filename to output results to a file
-    - grep
-    
-- Single quotes mean treat any special characters as just a normal character (e.g. !, *, &, etc)
-
-
-
-# Javascript syntax
-- Variables
-    - `let` if value will change
-    - `const` if value will be static
-    - If unsure, use `const` and change to `let` later if need be.
-- Template literals
-    - Denoted with backticks `` and contain placeholders ${expression}.
-        - Kind of like powershell...
-    - Work well with multi-line strings since implicit newlines are part of the string.
-    - Within expressions, can also perform operations, call functions, and use loops!
-- Destructuring
-    - Destructuring borrows inspiration from languages like Perl and Python by allowing 
-    you to specify the elements you want to extract from an array or object on the left 
-    side of an assignment. 
-    
-
-# Project 1 Notes - Portfolio
-- Image resources
-    - [yellow pencils](https://unsplash.com/photos/1_CMoFsPfso)
-        - Use art direction
-- Use yellow images (search "yellow" on unsplash.com) for app backgrounds
-    - [pixel "app"](https://unsplash.com/photos/WEVSu0CB2M4)
-    - [neighborhood "app"](https://unsplash.com/photos/np9Tr3SDRw4)
-    - [memory "app"](https://unsplash.com/photos/bmS3th_-BIg)
-- Fonts
-    - [Raleway](https://fonts.google.com/specimen/Raleway)
-        - Has a really cool "W"
-    - [Lato](https://fonts.google.com/specimen/Lato)
-        - Pretty classic
-
-# Writing READMEs
-- Good questions to ask yourself:
-    - What steps need to be taken?
-    - What should the user already have installed or configured?
-    - What might they have a hard time understanding right away?
-- Chooseing a license
-    - https://choosealicense.com/
-- Online Markdown editor with a live view
-    - https://dillinger.io/  
-
-#Contained Table
-- Wrap the table in a div (ex. `<div class="contained_table">table goes here</div>)
-` 
-div.contained_table {
-    width: 100%;
-    overflow-x: auto;
-}
-`
-
-# Fonts
-- Ideal Measure (the length of a line of text)
-    - 45 - 90 characters per line (cpl)
-    -  *Try 65 cpl*
-    -  Use measure as a factor for choosing breakpoints
-
-- Size
-    - Minimum font size: 16px
-    - Minimum line-height: 1.2em
-    - Consider increasing both for text heavy sites
-
-
-# Minor breakpoints
-- Fine tune font size, spacing, etc. at minor breakpoints even if the layout isn't changing.
+# Staying in Sync With a Remote Repository
+- How to create a pull request
+    - Fork the soruce respository
+    - Clone fork on local machine
+    - Make some commits (ideally on a topic branch)
+        - See section "Working on Another Developer's Repository"
+    - Push the commits back to your fork
+    - Create a new pull request and choose the branch that has your new commits
+- Stay in sync with the source project
+    - "Starring" a respository - like adding it to a favorites's list but no notifications
+    - "Watching" a respository - get notified of changes
+    - To include upstream changes
+        - `git remote add upstream <url_of_original>
+            - adds another remote site
+            - "upstream" is the conventional name
+        - `git fetch <remote_site> <branch>`
+        - Merge the upstream's branch into local branch (verify you are in the correct branch)
+        - Push the newly update branch to your origin repo
+- Manage an Active PR
+    - If the project's maintainer is requesting changes to the pull request:
+        - Make any necessary commits on the same branch on your local repository
+        - Push the branch to _your_ fork fo the source repository
+    - `git rebase`
+        - will squash commits (consolidate commits on a new base)
+        - `git rebase -i HEAD~3` and replace "3" with the number of commits you want to 
+        squash.
+            - Will then open editor where you need to say what you want to do to each commit.
+            - Oldest commit will be at top.
+            - Need to keep (aka pick) at least one commit but can also change the commit 
+            message (reword) to reflect the squash
+            - Will likely need to do a git push force since GitHub will be unhappy that you
+            are trying to push a branch with fewer commits.
+        - Be careful with `git rebase`! Rebasing will create a new commit with a new SHA which
+        has the potential to severely mess up anyone else who might be working with commits 
+        you've already pushed. They may not be able to get their repo back in sync and might 
+        have to start over.
