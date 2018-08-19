@@ -1,8 +1,3 @@
-
-
-
-
-
 # Minor breakpoints
 - Fine tune font size, spacing, etc. at minor breakpoints even if the layout isn't changing.
 
@@ -275,3 +270,86 @@ div.contained_table {
         has the potential to severely mess up anyone else who might be working with commits 
         you've already pushed. They may not be able to get their repo back in sync and might 
         have to start over.
+
+
+# Document Object Model
+- Model of the relationships and attributes of the of the HTML document.
+- NOT part of the JavaScript languages
+    - Constructed by the browser
+    - Is globally accesible by JS using the `document` object
+- Select page element by ID
+    - `document.getElementbyID('id_here');`
+        - Don't need to include the `#` prefix
+        - Only returns on element
+- Select page elements by class or tag
+    - `document.getElementsByClass('class_here');`
+    - `document.getElementsByTagName('tag_name_here');`
+    - The returned elements are not an array but an HTML collection.
+- Nodes, Elements, and Interfaces
+    - Nodes & nodes
+        - Capital N Nodes - like a class
+        - lower case n nodes - like an object
+    - Interface
+        - List of properties and methods that are inherited
+        - Properties = data
+        - Methods = functionality
+    - Element Interface is a descendent of the Node Interface
+        - Therefore inherits all of Node's properties and methods
+    - Note: In Chrome web inspector, `$0` refers to the highlighted element in the "Elements"
+    tab
+    - To check out all the different interfaces of different elements:
+    https://developer.mozilla.org/en-US/docs/Web/API
+- More Wayys to Access Elements
+    - `document.querySelector('css_selector_here')
+        - NOTE: Only returns 1 elements. In cases of multiple elements that match, it will
+        only return the first item it finds.
+    - `document.querySelectorAll('css_selector_here')
+        - Will return multiple elements
+
+
+# Creating Content with Javascript
+- Updating existing page content
+    - `.innerHTML' 
+        - gets/sets the HTML content _inside_ the selected element.
+        Includes HTML tags.
+        - When setting `.innterHTML` - HTML code is parsed as HTML
+    - `.textContent` 
+        - gets/sets the text content of an element and all its descendants
+        - Returns all text available
+        - `innerText` gets the visual text as it would be seen visually
+- Add new page content
+    - `document.createElement('tag_name')`
+        - Just creates. Doesn't place on page.
+    - `.appendChild(newly_created_element)`
+        - `.appendChild()` will add it as the last child
+        - if an element already exists on the DOM, `.appendChild(foo)`will move it instead 
+        of duplicating it.
+    - `.insertAdjacentHTML('location', HTMLtext)`
+        - Requires 2 arguments: (1) location of HTML (2) HTML text to be inserted
+            - beforebegin – inserts the HTML text as a previous sibling 
+            - afterbegin – inserts the HTML text as the first child 
+            - beforeend – inserts the HTML text as the last child 
+            - afterend – inserts the HTML text as a following sibling
+
+            A visual example works best, and MDN's documentation has a fantastic example that I'll modify slightly:
+
+            <!-- beforebegin -->
+            <p>
+                <!-- afterbegin -->
+                Existing text/HTML content
+                <!-- beforeend -->
+            </p>
+            <!-- afterend -->
+    - `.textcontent` property is used more than creating a text node `.createTextNode()`
+- Remove page content
+    - `<parent_element>.removeChild(<child_to_remove>)`
+        - Instead of looking up parent element - can call it directly using the 
+        `.parentElement` property. Element uses itself to remove itself.
+            - ex. `mainHeading.parentElement.removeChild(mainHeading);`
+        - Other useful properties
+            - `.firstChild`
+                - Caution: might return whitespace if there is any instead of an HTML tag
+            - `.firstElementChild`
+                - Will return the first element
+    - `<element>.remove();`
+        - Is called directly on the element to be removed. Simple.
