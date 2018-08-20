@@ -353,3 +353,32 @@ div.contained_table {
                 - Will return the first element
     - `<element>.remove();`
         - Is called directly on the element to be removed. Simple.
+- Style Page Content
+    - `.style.<prop>`
+        - Modifies the element's style attribute which has the most CSS specificity
+            - Can only modify one CSS style at a time.
+            - CSS properties are written in camel case, not standard CSS
+        - example:  `mainHeading.style.backgroundColor = 'orange';`
+    - `style.cssText`
+        - Can do multiple styles at once. Uses actual CSS names for styles
+        - Put in a semicolon separated list.
+        - Overwrites any pre-existing styles in the style attribute
+        - example:  `mainHeading.style.cssText = 'color: blue; background-color: orange;`
+    - `.setAttribute()
+        - example: `mainHeading.setAttribute('style', 'color: blue; background-color: orange; font-size: 3.5em;');
+        - Can use this for any atribute of an element
+    - `.className`
+        - Returns a string of all of the element's classes
+            - String is a space separated list. use the `.split(' ');` method to build
+            an array you can use
+        - Can set class or classes as well though it will replace any pre-existing classes
+    - `classList`
+        - Returns a DOMTokenList (which is much nicer to work with)
+        - Popular properties
+            - `.add()` to add a class to the list
+            - `.remove()` to remove a class from the list
+            - `.toggle()` to add the class if it doesn't exist or remove it if it does
+            - `.contains()` returns a boolean based on if the class exists or not
+
+
+#Working with Browser Events
