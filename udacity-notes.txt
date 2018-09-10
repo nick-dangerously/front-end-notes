@@ -355,7 +355,7 @@ div.contained_table {
         - Is called directly on the element to be removed. Simple.
 - Style Page Content
     - `.style.<prop>`
-        - Modifies the element's style attribute which has the most CSS specificity
+        - Modifies the element's style attribute which has the mtypeost CSS specificity
             - Can only modify one CSS style at a time.
             - CSS properties are written in camel case, not standard CSS
         - example:  `mainHeading.style.backgroundColor = 'orange';`
@@ -365,7 +365,8 @@ div.contained_table {
         - Overwrites any pre-existing styles in the style attribute
         - example:  `mainHeading.style.cssText = 'color: blue; background-color: orange;`
     - `.setAttribute()
-        - example: `mainHeading.setAttribute('style', 'color: blue; background-color: orange; font-size: 3.5em;');
+        - example: `mainHeading.setAttribute('style', 'color: blue; background-color: orange; 
+        font-size: 3.5em;');
         - Can use this for any atribute of an element
     - `.className`
         - Returns a string of all of the element's classes
@@ -382,3 +383,69 @@ div.contained_table {
 
 
 #Working with Browser Events
+- Seeing an event
+    - Chrome browser has a function: `monitorEvents(element_to_be_monitored)`
+        - `monitorEvents(element_to_be_monitored)` will stop monitoring
+        - For dev/testing purposes only. Should not be in production code
+    - "Event Target Interface" > "Node Interface" > "Element Interface"
+        - Every other interface inherits from "Event Target Interface" and therfore contains
+        its properties nd methods.
+        - Both the document object and _any DOM element_ can be an event target.
+- Respond to Events
+    - `.addEventListener()`
+        - `<event-target>.addEventListener(<event-to-listen-for>, 
+        <function-to-run-when-an-event-happens>);`
+    - an event listener needs three things:
+        1. an event target - this is called the "target"
+        2. the tpe of event to listen for - this is called the "type"
+            - Could be a clicks, double click, pressing a key on the keyboard, scrolling,
+            submitting a form, many more!
+        3. a function to run when the event occurs - this is called the "listener"
+    - list of Events
+        - https://developer.mozilla.org/en-US/docs/Web/Events
+- Remove an Event listener
+    - `.removeEventListener()`
+        - `<event-target>.removeEventListener(<event-to-listen-for>, 
+        <function-to-remove>);`
+    - an event listener needs three things:
+        1. an event target - this is called the "target"
+        2. the tpe of event to listen for - this is called the "type"
+            - Could be a clicks, double click, pressing a key on the keyboard, scrolling,
+            submitting a form, many more!
+        3. a function to run when the event occurs - this is called the "listener"
+    - NOTE: the function specified in the `.removeEventListener()` must be the extact
+    same function (in the Javascript equality sense) and not just an identical looking 
+    function.
+    - For the `.removeEventListener()` to work, it must have the same target, type, and
+    listener of the `.addEventListener` it is trying to remove.
+- Lifecycle of an event
+    - 3 Phases
+        1. The "capturing" phase
+        2. The "at target" phase
+        3. And the "bubbling" phase
+    - It follows the above order
+    - The "capturing" phase happens at the top (<HTML> element) and works its way down
+    to the target. "Capturing" lets the parent intercept an event before it reaches a child.
+    - The "bubbling" phase happens when an event arrives at its target and doesn't have a 
+    listener. 
+        - By default if you click a child item and a handler doesn't intercept the click, 
+        the event will "bubble" upward to the parent and keep bubbling unitl something 
+        handles it or it hits the document.
+        - You can pass a third argument `true` to the `.addEventListener()` function to
+        invoke the listener earlier, during the "capturing" phase.
+    - The event object
+        - Just a regular javascript object that includes a ton of information about the
+        event itself.
+        - Add an event parameter to the event listener to store the event object
+            - `document.addEventListener('click', function(event) {
+                console.log('The document was clicked');
+            });`
+            - An 'event' is an 'evt' is an 'e'
+                - The function paramter is just a regular variable so call it what you like.
+        - Prevent default
+            - One handy use of the capturing the event object is that you can prevent the 
+            default action from happening (so click on a link and _not_ open a page, validate
+            a form before submitting it, etc.) by calling the `.preventDefault()` method.
+            - `target.addEventListener('click', function (event) {
+                event.preventDefault()
+            })`
