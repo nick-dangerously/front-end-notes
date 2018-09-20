@@ -449,3 +449,86 @@ div.contained_table {
             - `target.addEventListener('click', function (event) {
                 event.preventDefault()
             })`
+        - `.target`
+            - property of the event object which gives us direct access to the element that
+            was clicked.
+            - Provides access to `evt.target.textContent` or whatever other properties we 
+            want to modify.
+            - Allows a single event listener on parent to monitor all child elements
+            - To make the child is the one we want try:
+                `if (evt.target.nodeName === 'ELEMENT_NAME') { whatevs }`
+                - `.nodeName` returns a all caps string.
+- Know when the DOM is ready
+    - The DOM is built incrementally and sequentially!
+        - There is the potential for JS to run before the HTML elements are created
+    - Solution 1 - Place JS bottom of file.
+    - Solution 2 - Browser Events
+        - When the DOM has been fully loaded, the browser will fire a `DOMContentLoaded`
+        event
+        ` document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Loaded - do the thing')
+        });
+        - However, as the wrapper function adds more code, generally better to just put
+        JS at end of HTML.
+            - Exception is if you really need your JS to run before the rest of the JS.
+
+
+#Performance
+- Add Page Content Efficiently
+    - Testing code performance
+        - `performance.now()`
+            - Returns an extremely accurate (to 5 microsends) timestamp.
+            - Use to get an initial timestamp, then the code in question, then a final 
+            timestamp. Subtract the two.
+    - Appending to the page takes time. Appending to parent elements that takes less time.
+        - Better to append a parent element with 200 children than to directly append those
+        children 200 times to the document.body element.
+            - Due to the browser needing the reflow and repaint the screen.
+    - `.createDocumentFragment()`
+        - lightweight version of the document structure. Changes made to the document 
+        fragment don't affect the document, cause reflow, or incur and performance impact
+        that can occur when changes are made.
+        - `const fragment = document.createDocumentFragment()`
+- Reflow and Repaint
+    - Reflow - is the process of the browser laying out the page. 
+        - Happens every time the layout is changed.
+        - Fairly expensive (slow) process
+    - Repaint - happens after reflow as the browser draws the new layout to the screen.
+        - Fairly quick but still try to minimize
+        - Hiding elements would cause a repaint but not a reflow
+    - Ex. if you add a CSS class to an element, the browser often recalculates the layout
+    of the entire page -- triggering a reflow and repaint.
+    - Hide/Change/Show
+        - Good pattern to use to minimize reflows if changes are relatively contained
+        - "Change" could mean add/delete/or change
+- The Call Stack
+    - a list of functions that are running. When a function is invoked, it is added to the 
+    list. When all of the code in the function is executed, it is removed from the stack.
+    - functions run to completion
+    - Javascript is single-threaded
+- The Event Loop
+    - JS Concurrency Model:
+        - (1) If some JS is running, let it run until it is finished ("run-to-completion")
+        - (2) If no JS is running, run any pending event handlers.
+    - Event loop: pick up the next event, run its handler, and repeat
+    - 3 parts around event loop
+        - (1) the Call Stack
+        - (2) Web API's/the browser
+        - (3) an Event Queue
+    - Web API's/browser (aka asynchronous things)
+        ex. `.addEventListener()` or `setTimeout()`
+    - Asynchronous code is moved from the call stack to the web api/browser. When it is ready
+    to be executed, it is moved to the event queue where it waits until the call stack is 
+    empty. Then it is moved to the call stack and gets executed.
+- `setTimeout()`
+    - takes (1) a function to run at some later time (2) the number of milliseconds the code
+    should wait before running the function.
+    - ex:
+        `setTimeout(function sayHi() {
+            console.log('Howdy');
+        }, 1000);`
+    - `setTimeout()` with a Delay of 0
+        - Can potentially convert long running code to one that's broken up for user
+        interaction.
+        - Gives user interaction a chance to trigger events since long running code 
+        gets rotued through the event queue.
