@@ -532,3 +532,32 @@ div.contained_table {
         interaction.
         - Gives user interaction a chance to trigger events since long running code 
         gets rotued through the event queue.
+
+# Writing Test Suites with Jasmine
+- Syntax
+    - `describe` - used to identify a suite - a group of related specs
+    - `it` used to identify a specification (aka "spec") - a container for a test
+        - If any of the `expect` functons within a spec fail - the spec fails
+    - `expect` - used to launch a test 
+        - `expect(actual(test_parameters)).matcher(expected_vaues)`
+    - `beforeEach` - function defined once that will run before each test.
+    - Example:
+            describe("Player", function() {
+                var player;
+                var song;
+
+                beforeEach(function() {
+                    player = new Player();
+                    song = new Song();
+                });
+
+                it("should be able to play a Song", function() {
+                    player.play(song);
+                    expect(player.currentlyPlayingSong).toEqual(song);
+
+                    //demonstrates use of custom matcher
+                    expect(player).toBePlaying(song);
+            });
+
+- Red, Green, Refactor cycle
+    - Write your spec. Fix each failure. Refactor.
