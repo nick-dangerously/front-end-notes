@@ -455,7 +455,7 @@ div.contained_table {
             - Provides access to `evt.target.textContent` or whatever other properties we 
             want to modify.
             - Allows a single event listener on parent to monitor all child elements
-            - To make the child is the one we want try:
+            - To make sure the child is the one we want try:
                 `if (evt.target.nodeName === 'ELEMENT_NAME') { whatevs }`
                 - `.nodeName` returns a all caps string.
 - Know when the DOM is ready
@@ -561,3 +561,96 @@ div.contained_table {
 
 - Red, Green, Refactor cycle
     - Write your spec. Fix each failure. Refactor.
+
+
+## React
+# Why React
+- "Compositional model, declarative nature, the way data flows through a component, 
+and really just javascript"
+    - Composition - to combine simple functions to build more complicated ones
+    - Reach functions take in some arguments and return some ui
+    - Each function should only do one thing.
+    - React relies heavily on composition.
+- React is declarative (not imperative)
+- Unidirectional data flow (cf. data binding in Angular or Ember)
+    - Flows from parent to child.
+    - Child components can send updates to parent component (where parent performs
+    actual change).
+- "React is just javascript" - if you already feel comfortable with JavaScript, you'll
+quickly feel comfortable with React.
+- Array's `.map()` method
+    - Get's called on an existing array and returns a new array based on what's 
+    returned from the function that's passed as an argument.
+    - Example:
+        const names = ['Michael', 'Ryan', 'Tyler'];
+        const namesLength = names.map( name => name.length );
+
+    - Explanation:
+        - The arrow function that's passed to `.map() gets called for each item in
+        `names` array. The arrow function receives the first name in the array, 
+        stores it in the `name` variable and returns its length. Then it does that again
+        for the two remaining names.
+        - `.map()` returns a new array with the values that are returned from the arrow
+        function so `nameLengths` will be a new array `[7, 4, 5]`.
+        - `.map()` returns a new array, it does not modify the original array.
+- Array's `.filter()` method
+    - Similar to `.map()`
+        - Called on an array, takes a function as an argument, returns a new array
+    - Difference is that function passes to `.filter()` is used as a test and only items
+    in the array that pass the test are included in the new array.
+    - Example:
+        const names = ['Michael', 'Ryan', 'Tyler'];
+        const shortNames = names.filter( name => name.length < 5 );
+    
+    - Explanation:
+        - `shortNames` will be a new array with just `['Ryan']`.
+        - First item is stored in the `name` variable. Then the test is performed.
+        This is what's doing the actual filtering.
+        - If it's 5 or greater, then it's skipped (and not included in the new array)
+        - If is less than 5, then the function returns true and the name is included in 
+        the array.
+- Can chain `.map()` and `.filter()` together
+    - Best to run `.filter()` first to reduce items for `.map()`
+
+# Rendering UI with React
+- React uses JavaSccript objects to build UI (not actual DOM elements)
+- `.createElement()`
+    - `React.createElement( /* type aka tag name */, /* props */, /* content */ )`
+        - type = HTML element or React Component
+        - props = either null or an object
+        - content = null, string, React Element, or React Component
+        - Using arrays as content
+            - React would like to a unique key for the prop in that case
+            - Can pass index using `.map()` and specifying index in the callback then use
+            `{ key: index}` in the "props" part of `React.createElement()` 
+    - In React deciding what to render is completely decoupled from actually rendering it.
+    - `ReactDOM.render()` to render in the browser
+    - Needs to hook into the DOM. Default is element with id='root'
+-JSX
+    - Is a syntax extension to `.createElement()` that lets us write JavaScript code that looks
+    a little more like HTML.
+    - Use braces {} to get React to evaluate JavaScript insideof a JSX statement
+    - For the key prop error, add a `key = {}` within the bracks of the JSX.
+    - Must only return a single element (can have multiple cildren though).
+    - Needs to be transpiled into regular JS before reaching the browser.
+        - Typically Babel is used to transpile. And Babel is usually run through a build tool
+        like Webpack.
+- Can write in `debugger` in pause script execution at the point. 
+- Components
+    - Can group many elements together and use them as if they were one element.
+    - `render()` is the only method absolutely required in any component class.
+    - Example:
+        class Class_Name extends React.Component {
+        // ...
+        }
+    - In other word, we are defining a component that's really just a JS class that
+    inherits from `React.Component`
+        - May also see:
+            class Class_Name extends Component {
+            // ...
+            }
+        - Functionally the same but make usre that the module import matches accordingly:
+        import React, { Component } from 'react';
+- React without a build step
+    - https://shinglyu.github.io/web/2018/02/08/minimal-react-js-without-a-build-step-updated.html
+    
