@@ -1,4 +1,4 @@
-# Minor breakpoints
+    # Minor breakpoints
 - Fine tune font size, spacing, etc. at minor breakpoints even if the layout isn't changing.
 
 
@@ -96,6 +96,27 @@ div.contained_table {
 
     git config --list
 
+# Bash profile stuff to make git easier to navigate (save to `.bash_profile`)
+- 
+        # Enable tab completion
+        source ~/.udacity-terminal-config/git-completion.bash
+
+        # Change command prompt
+        source ~/.udacity-terminal-config/git-prompt.sh
+
+        # colors!
+        red="\[\033[38;5;203m\]"
+        green="\[\033[38;05;38m\]"
+        blue="\[\033[0;34m\]"
+        reset="\[\033[0m\]"
+
+        export GIT_PS1_SHOWDIRTYSTATE=1
+
+        # '\u' adds the name of the current user to the prompt
+        # '\$(__git_ps1)' adds git-related stuff
+        # '\W' adds the name of the current directory
+        export PS1="$red\u$green\$(__git_ps1)$blue \W
+        $ $reset"
 
 # Version Control / Git
 - Commands
@@ -562,9 +583,43 @@ div.contained_table {
 - Red, Green, Refactor cycle
     - Write your spec. Fix each failure. Refactor.
 
+## Promises
+# Creating Promises
+- Promises are the best way to handle asynchronous code
+    - They are try catch wrapper around code that will finish at a variable time.
+- Promise terms
+    - Fulfilled (aka resolved) - it worked.
+    - Rejected - It didn't work.
+    - Pending - Still waiting...
+    - Settled - Something happened
+        - Can only settle once
+- Time between creating and resolving promise can block main JS thread
+- Syntax
+    - Exmample:
+        new Promise(function(resolve, reject){
+            var value = doSomething();
+            if (thingWorked) {
+                resolve(value);
+            } else if (somethingWentWrong) {
+                reject();
+            }
+        }).then(function(value){
+            // success!
+            return nextTheing(value);
+        }).catch(rejectFunction);
 
-## React
-# Why React
+    - The value at resolve is passed to the `.then()` function if it resolves. Values to
+    reject passes to the next `.catch()`. 
+        - If nothing is passed to `reject()` then it is undefined and still gets evaluated 
+        by `.catch()`. JS errors also get handled by `.catch()`.
+- `fetch`
+    - Easier to use than XHR
+
+
+
+
+# React
+## Why React
 - "Compositional model, declarative nature, the way data flows through a component, 
 and really just javascript"
     - Composition - to combine simple functions to build more complicated ones
@@ -612,7 +667,7 @@ quickly feel comfortable with React.
 - Can chain `.map()` and `.filter()` together
     - Best to run `.filter()` first to reduce items for `.map()`
 
-# Rendering UI with React
+## Rendering UI with React
 - React uses JavaSccript objects to build UI (not actual DOM elements)
 - `.createElement()`
     - `React.createElement( /* type aka tag name */, /* props */, /* content */ )`
@@ -639,6 +694,7 @@ quickly feel comfortable with React.
 - Components
     - Can group many elements together and use them as if they were one element.
     - `render()` is the only method absolutely required in any component class.
+        - Things will break without it.
     - Example:
         class Class_Name extends React.Component {
         // ...
@@ -653,4 +709,56 @@ quickly feel comfortable with React.
         import React, { Component } from 'react';
 - React without a build step
     - https://shinglyu.github.io/web/2018/02/08/minimal-react-js-without-a-build-step-updated.html
-    
+
+## Composing with Compnents
+- Main unit of encapsulation
+    - React encourages building websites using composition instead of inheritance.
+
+
+# State Management
+## Introduction
+- Props - allow you to pass data ubti your components.
+- Functional Components - an alternative way to create components.
+- Controlled Components - allow you to hook up the forms in yor application to
+your component state.
+## Pass Data With Props
+- `prop` - any input you pass to a component.
+- Treat just like an HTML attribute.
+- Access from inside component using:
+    `this.props.whatever_attribute_name`
+## Functional Components
+- If all your component has is a render memethod, can just create it as a 
+function.
+    - aka "Stateless Functional Component"
+    - Takes in props, returns description of UI.
+        - Don't need to create it as a class. Create is as a normal function.
+    - No `this` keyword. Access props with `props.whatever_you_want` instead of 
+    `this.props.whatever_you_want`
+        - Make sure you pass `props` to the function though.
+## Add State To A Component
+- `props` refers to "read-only" or immutable data.
+- `state` represent mutable data.
+- To add stat, above the `render()` part add:
+    state = {
+        whatever: 'whatevs'
+    }
+- Can access what is the `state` object with `{this.state.whatever}`
+- Avoid initializing `state` with `props` 
+    - This is an error-prone anti-patten since `state` will only be initalized
+    with `props` when the component is first created.
+- By having a component manage its own state, any time changes are made to that
+state, React will automatically make the changes and update the page.
+    - Called "reconciliation"
+## Update State with `setState`
+- Cannot just directly `this.state.whatever = newWhatevs`
+- "Your UI is just a function of your state"
+    - Beause once `state` changes, UI will update accordingly.
+- Two ways to change state.
+    - Pass in an object:
+        this.setState({
+            whatever: 'new whatevs'
+        })
+    - Pass in a function:
+        this.setstate((prevState) => ({
+            whatever: prevState.whatevs + 1
+        }))
