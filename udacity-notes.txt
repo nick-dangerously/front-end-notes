@@ -762,3 +762,99 @@ state, React will automatically make the changes and update the page.
         this.setstate((prevState) => ({
             whatever: prevState.whatevs + 1
         }))
+- PropTypes
+    - Package that let's us define the data we want to see upfront and 
+    warn us during development if the prop that is passed doesn't match.
+        - Install with either:
+            `npm install --save prop-types`
+            `yarn add prop-types`
+        - At top of js file:
+            `import PropTypes from 'prop-types'`
+        - At bottom of component:
+            `function_name.PropTypes = {
+                props: PropTypes.whatever_type.is_it_required?
+            }`
+-Controlled Components
+    - The component controls its own value.
+    - Thusly:
+        - User enters text into input field.
+        - `onChange` attribute tied to function which is invoked on change.
+        - Function invoked from above calls `setState`, merging in new
+        state.
+        - Because its state has changed, component re-renders
+    - example: see ListGear.js in gear-list-react project.
+    - Benefits:
+        - Instant input validation
+        - Conditonally disable/enable buttons
+        - Enforce input formats.
+## Summary
+    - `state` - use if component will store mutable data.
+    - `props` - use if data will be 'read only'
+
+
+# Render UI with External Data
+## Introduction
+- 'Lifecycle Events' - special methods each component can have that 
+allows us to hook into the views when conditions happen.
+    - Data should not be fetched in `Render()`!
+        - Nor should it make HTTP requests, fetch data that is used to
+        display content, or alter the DOM.
+        - These things should instead be put into lifecycle events
+    - Lifecycle events are specifically named methods in a component.
+    - Types:
+        - `componentWillMount` is invoked immediately before the 
+        component is inserted in DOM.
+        - `componentDidMount` is invoked immediately after the 
+        component is inserted in the DOM.
+        - `componentWillUnmount` is invoked immediately before a 
+        component is removed from the DOM.
+        - `componentWillReceiveProps` is invoked whenever the component 
+        is about to receive brand new props.
+    - `ComponentDidMount` - use to make AJAX request or fetch data.
+- Lifecycle events called when.
+    - Component is being added to the DOM
+        - `constructor()`
+        - `componentWillMount()`
+        - `render()`
+        - `componentDidMount()`
+    - Component is re-rendered
+        - `componentWillReceiveProps()`
+        - `shouldComponentUpdate()`
+        - `componentWillUpdate()`
+        - `render()`
+        - `componentDidUpdate()`
+    -Component is removed from the DOM
+        - `componentWillUnmount()`
+
+- Side note: `expression && expression` is called 'short circuit evaluation.
+    - If the first expression evaluates to true, then the second expression
+    is run.
+
+# Managing App Location with React Router
+- Single-page application - entire site content is downloaded all at
+once. Javascript handles the navigation without making additional
+network requests.
+- React Router
+    - Turns React projects into SPA's.
+        - Also allows bookmarking of state.
+    - Dynamically renders content based on the value in `this.state`.
+- Install with: `npm install --save react-router-dom`
+    - Then add the import statement to the index.js file.
+    - Then in index.js, wrap the app element in the
+    `<BrowserRouter></BrowserRouter>` element like so:
+        `<BrowserRouter><App /></BrowserRouter>`
+- `<BrowserRouter>`
+    - Listens to changes in URL.
+    - Make sure that the correct screen shows up.
+- `<Link>`
+    - Component which does the navigation.
+    - `to` is `<Link>` version of `href`.
+- `<Route>`
+    - Checks the URL and if the `path` matches, will run render UI.
+        - Can:
+            <Route path='\whatever' render={() => (
+                <Whatevs />
+            )}/>` 
+        - Can also render component directly:
+        component={Component_Name}
+     -Use `exact` attribute for exact matching of path='/'
